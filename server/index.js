@@ -1,19 +1,19 @@
 const http = require('http')
-const fs = require('fs')
-const httpPort = 80
-
-http.createServer((req, res) => {
-  fs.readFile('index.htm', 'utf-8', (err, content) => {
-    if (err) {
-      console.log('We cannot open "index.htm" file.')
-    }
-
-    res.writeHead(200, {
-      'Content-Type': 'text/html; charset=utf-8'
-    })
-
-    res.end(content)
-  })
-}).listen(httpPort, () => {
-  console.log('Server listening on: http://localhost:%s', httpPort)
-})
+const url = require('url')
+const start = (route) => {
+  const onRequest = (req, res) => {
+    // const URL = url.URL; const reqUrl = new URL(req.url)
+    const reqUrl = url.parse(req.url)
+    route(reqUrl.pathname)
+    // const pathname = reqUrl.pathname; console.log(`request received from
+    // ${reqUrl}`);
+    res.writeHead(200, {"Content-type": "text-plain"})
+    res.write('hello nodejs')
+    res.end();
+  }
+  http
+    .createServer(onRequest)
+    .listen(8898)
+  console.log('server start');
+}
+exports.start = start;
