@@ -18,6 +18,8 @@ const routes = [
         component: page2
     }
 ];
-const router = new VueRouter({mode: "", routes});
+// 这里如果mode: "history"可以去掉 # 
+// 但是直接进入会出错，需要nodejs配合
+const router = new VueRouter({mode: "history", routes});
 console.log(router);
 export default router;
